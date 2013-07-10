@@ -1,9 +1,10 @@
 using System;
+using System.ComponentModel;
 using System.IO;
+using System.Threading;
 using Inedo.BuildMaster;
 using Inedo.BuildMaster.Extensibility.Actions;
 using Inedo.BuildMaster.Extensibility.Actions.Testing;
-using Inedo.BuildMaster.Web;
 
 namespace Inedo.BuildMasterExtensions.Dummy
 {
@@ -11,11 +12,15 @@ namespace Inedo.BuildMasterExtensions.Dummy
         "Dummy Testing",
         "Runs a series of unit tests.",
         "Dummy")]
-    [CustomEditor(typeof(DummyTestingActionEditor))]
     public sealed class DummyTestingAction : UnitTestActionBase
     {
-        private string _TestsToRun;
-        [Persistent]
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DummyTestingAction"/> class.
+        /// </summary>
+        public DummyTestingAction()
+        {
+        }
+
         /// <summary>
         /// Gets or sets the newline-separated lists of tests
         /// </summary>
@@ -25,67 +30,77 @@ namespace Inedo.BuildMasterExtensions.Dummy
         ///   1: Test Name (optional)
         ///   2: Test Result (optional)
         /// </remarks>
-        public string TestsToRun
-        {
-            get { return _TestsToRun; }
-            set { _TestsToRun = value; }
-        }
+        [Persistent]
+        [Category("Tests to Run")]
+        [DisplayName("Tests")]
+        [Description("Each test is represented as a pipe-delimited string with: "
+                    + "<br /> 0: P or F (Pass or Fail)"
+                    + "<br /> 1: Test Name (optional)"
+                    + "<br /> 2: Test Result (optional)")]
+        public string[] TestsToRun { get; set; }
 
         public override string ToString()
         {
-            return "Run " + GroupName + " Tests.";
+            return "Run " + this.GroupName + " tests";
         }
-        
+
         protected override void RunTests()
         {
-            if (TestsToRun == null)
+            if (this.TestsToRun == null || this.TestsToRun.Length == 0)
             {
-                LogInformation("No tests to run!");
+                this.LogInformation("No tests to run.");
                 return;
             }
 
-            LogInformation("Running Tests...");
-            StringReader sr = new StringReader(TestsToRun);
+            this.LogInformation("Running tests...");
+            var sr = new StringReader(string.Join(Environment.NewLine, this.TestsToRun));
             int testNum = 0;
             while (true)
             {
-                string line = sr.ReadLine();
-                if (line == null) break;
+                var line = sr.ReadLine();
+                if (line == null)
+                    break;
+
                 testNum++;
 
-                string[] test = line.Split(new char[] { '|' }, 3);
+                var test = line.Split(new[] { '|' }, 3);
                 bool pass = test[0].StartsWith("P");
-                string testLog = test.Length > 2
+                var testLog = test.Length > 2
                         ? test[2]
                         : string.Empty;
 
-                string testName = test.Length > 1
+                var testName = test.Length > 1
                         ? test[1]
                         : string.Format("Test #{0}", testNum);
                 if (pass)
                 {
-                    LogInformation(testName);
-                    if (!string.IsNullOrEmpty(testLog)) LogDebug(testLog);
+                    this.LogInformation(testName);
+                    if (!string.IsNullOrEmpty(testLog))
+                        this.LogDebug(testLog);
                 }
                 else
                 {
-                    LogError(testName);
-                    if (!string.IsNullOrEmpty(testLog)) LogError(testLog);
+                    this.LogError(testName);
+                    if (!string.IsNullOrEmpty(testLog))
+                        this.LogError(testLog);
                 }
 
-                DateTime start = DateTime.Now;
-                System.Threading.Thread.Sleep(500);
-                DateTime end = DateTime.Now;
+                this.ThrowIfCanceledOrTimeoutExpired();
 
-                RecordResult(
+                var start = DateTime.Now;
+                Thread.Sleep(500);
+                var end = DateTime.Now;
+
+                this.RecordResult(
                     testName,
                     pass,
                     testLog,
                     start,
-                    end);
-                    
+                    end
+                );
             }
-            LogInformation("Tests complete.");
+
+            this.LogInformation("Tests complete.");
         }
     }
 }

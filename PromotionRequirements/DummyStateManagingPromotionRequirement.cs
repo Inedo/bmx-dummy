@@ -1,25 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Inedo.BuildMaster.Extensibility.PromotionRequirements;
-using Inedo.BuildMaster;
-using Inedo.BuildMaster.Web;
+﻿using Inedo.BuildMaster.Extensibility.PromotionRequirements;
 
 namespace Inedo.BuildMasterExtensions.Dummy
 {
     [PromotionRequirementsProperties(
         "Dummy State Managing Promotion Requirement",
         "A promotion requirement that determines whether it's met or required via state.")]
-    [CustomEditor(typeof(DummyStateManagingPromotionRequirementEditor))]
-    public sealed class DummyStateManagingPromotionRequirement 
-        : PromotionRequirementBase
-        , IPromotionRequirementStateManager
+    public sealed class DummyStateManagingPromotionRequirement : PromotionRequirementBase, IPromotionRequirementStateManager
     {
-        DummyPromotionRequirementState _state = new DummyPromotionRequirementState
-            {
-                Met = false,
-                Required = true
-            };
+        private DummyPromotionRequirementState state = new DummyPromotionRequirementState { Met = false, Required = true };
 
         public override string ToString()
         {
@@ -28,17 +16,15 @@ namespace Inedo.BuildMasterExtensions.Dummy
 
         public override bool IsRequired(PromotionContext context)
         {
-            return _state.Required;
+            return this.state.Required;
         }
 
         public override bool IsMet(PromotionContext context)
         {
-            return _state.Met;
+            return this.state.Met;
         }
 
-        #region IPromotionRequirementStateManager Members
-
-        PromotionRequirementStateBase IPromotionRequirementStateManager.GetInitialState(PromotionContext ctx)
+        public PromotionRequirementStateBase GetInitialState(PromotionContext ctx)
         {
             return new DummyPromotionRequirementState
             {
@@ -49,9 +35,7 @@ namespace Inedo.BuildMasterExtensions.Dummy
 
         public void SetState(PromotionRequirementStateBase state)
         {
-            _state = (DummyPromotionRequirementState)state;
+            this.state = (DummyPromotionRequirementState)state;
         }
-
-        #endregion
     }
 }

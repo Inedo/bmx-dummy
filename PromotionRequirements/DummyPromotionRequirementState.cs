@@ -1,4 +1,5 @@
-﻿using Inedo.BuildMaster;
+﻿using System.ComponentModel;
+using Inedo.BuildMaster;
 using Inedo.BuildMaster.Extensibility.PromotionRequirements;
 using Inedo.BuildMaster.Web;
 
@@ -7,7 +8,6 @@ namespace Inedo.BuildMasterExtensions.Dummy
     /// <summary>
     /// Editor for the dummy promotion requirement state.
     /// </summary>
-    [CustomEditor(typeof(DummyPromotionRequirementStateEditor))]
     public sealed class DummyPromotionRequirementState : PromotionRequirementStateBase
     {
         /// <summary>
@@ -21,12 +21,17 @@ namespace Inedo.BuildMasterExtensions.Dummy
         /// Gets or sets a value indicating whether the promotion requirement is currently required.
         /// </summary>
         [Persistent]
+        [DisplayName("Is Required")]
+        [Category("Dummy Options")]
+        [Description("Specify whether this promotion requirement is required and/or met.")]
         public bool Required { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the promotion requirement is currently met.
         /// </summary>
         [Persistent]
+        [DisplayName("Is Met")]
+        [Category("Dummy Options")]
         public bool Met { get; set; }
 
         /// <summary>
@@ -38,9 +43,9 @@ namespace Inedo.BuildMasterExtensions.Dummy
         public override string ToString()
         {
             return
-                (Required ? "" : "Not ") + "Required" +
+                (this.Required ? "" : "Not ") + "Required" +
                 " and " +
-                (Met ? "" : "Not ") + "Met";
+                (this.Met ? "" : "Not ") + "Met";
         }
     }
 }

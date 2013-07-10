@@ -1,12 +1,10 @@
 ﻿using Inedo.BuildMaster.Extensibility.Providers;
 using Inedo.BuildMaster.Extensibility.Providers.SourceControl;
 using Inedo.BuildMaster.Files;
-using Inedo.BuildMaster.Web;
 
 namespace Inedo.BuildMasterExtensions.Dummy
 {
     [ProviderProperties("Dummy SCM Provider", "A fake provider that does absolutely nothing.")]
-    [CustomEditor(typeof(DummySourceControlProviderEditor))]
     public sealed class DummySourceControlProvider : MultipleRepositoryProviderBase<DummyRepository>
     {
         public override char DirectorySeparator
@@ -16,10 +14,6 @@ namespace Inedo.BuildMasterExtensions.Dummy
 
         public override void GetLatest(string sourcePath, string targetPath)
         {
-        }
-        public override DirectoryEntryInfo GetDirectoryEntryInfo(string sourcePath, bool recurse)
-        {
-            return this.GetDirectoryEntryInfo(sourcePath);
         }
         public override DirectoryEntryInfo GetDirectoryEntryInfo(string sourcePath)
         {

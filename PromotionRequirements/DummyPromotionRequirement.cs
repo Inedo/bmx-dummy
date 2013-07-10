@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Inedo.BuildMaster.Extensibility.PromotionRequirements;
+﻿using System.ComponentModel;
 using Inedo.BuildMaster;
-using Inedo.BuildMaster.Web;
+using Inedo.BuildMaster.Extensibility.PromotionRequirements;
 
 namespace Inedo.BuildMasterExtensions.Dummy
 {
@@ -13,7 +10,6 @@ namespace Inedo.BuildMasterExtensions.Dummy
     [PromotionRequirementsProperties(
         "Dummy Promotion Requirement", 
         "A promotion requirement that, depending on configuration, is always met or not met.")]
-    [CustomEditor(typeof(DummyPromotionRequirementEditor))]
     public sealed class DummyPromotionRequirement : PromotionRequirementBase
     {
         /// <summary>
@@ -32,21 +28,26 @@ namespace Inedo.BuildMasterExtensions.Dummy
         public override string ToString()
         {
             return 
-                (Required ? "" : "Not ") + "Required" +
+                (this.Required ? "" : "Not ") + "Required" +
                 " and " +
-                (Met ? "" : "Not ") + "Met";
+                (this.Met ? "" : "Not ") + "Met";
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether this promotion requirement is required.
         /// </summary>
         [Persistent]
+        [Category("Dummy Options")]
+        [DisplayName("Is Required")]
+        [Description("Specify whether this promotion requirement is required and/or met.")]
         public bool Required { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this promotion requirement is met.
         /// </summary>
         [Persistent]
+        [Category("Dummy Options")]
+        [DisplayName("Is Met")]
         public bool Met { get; set; }
 
         /// <summary>
