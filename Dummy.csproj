@@ -99,6 +99,11 @@
     <Compile Include="PromotionRequirements\DummyStateManagingPromotionRequirement.cs" />
     <Compile Include="DummyTestingAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Testing\ExceptionType.cs" />
+    <Compile Include="Testing\FailingAction.cs" />
+    <Compile Include="Testing\FailingAgentBasedAction.cs" />
+    <Compile Include="Testing\FailingRemoteAction.cs" />
+    <Compile Include="Testing\UnserializableException.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
