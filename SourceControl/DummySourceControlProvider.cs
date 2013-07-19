@@ -1,12 +1,22 @@
-﻿using Inedo.BuildMaster.Extensibility.Providers;
+﻿using Inedo.BuildMaster;
+using Inedo.BuildMaster.Extensibility.Providers;
 using Inedo.BuildMaster.Extensibility.Providers.SourceControl;
 using Inedo.BuildMaster.Files;
 
 namespace Inedo.BuildMasterExtensions.Dummy
 {
     [ProviderProperties("Dummy SCM Provider", "A fake provider that does absolutely nothing.")]
-    public sealed class DummySourceControlProvider : MultipleRepositoryProviderBase<DummyRepository>
+    public sealed class DummySourceControlProvider : SourceControlProviderBase, IMultipleRepositoryProvider<DummyRepository>
     {
+        [Persistent]
+        public DummyRepository[] Repositories { get; set; }
+
+        RepositoryBase[] IMultipleRepositoryProvider.Repositories
+        {
+            get { return this.Repositories; }
+            set { this.Repositories = (DummyRepository[])value; }
+        }
+
         public override char DirectorySeparator
         {
             get { return '/'; }
