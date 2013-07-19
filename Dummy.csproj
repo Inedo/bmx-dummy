@@ -83,6 +83,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DummyAgent.cs" />
     <Compile Include="DummyExtensionConfigurer.cs" />
     <Compile Include="DummyAction.cs" />
     <Compile Include="Database\DummyDatabaseChangeScript.cs" />
