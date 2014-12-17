@@ -12,16 +12,6 @@ namespace Inedo.BuildMasterExtensions.Dummy
     [Serializable]
     public sealed class DummyPredicate : PredicateBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DummyPredicate"/> class.
-        /// </summary>
-        public DummyPredicate()
-        {
-        }
-
-        /// <summary>
-        /// Gets or sets the value returned when the predicate is evaluated.
-        /// </summary>
         [Persistent]
         [Category("Evaluate Value")]
         [DisplayName("Evaluate Value")]

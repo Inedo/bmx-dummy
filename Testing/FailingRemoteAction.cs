@@ -13,8 +13,8 @@ namespace Inedo.BuildMasterExtensions.Dummy.Testing
     /// </summary>
     [ActionProperties(
         "Failing Remote Action",
-        "A remote action which throws an unhandled exception.",
-        "Dummy")]
+        "A remote action which throws an unhandled exception.")]
+    [Tag("dummy")]
     public sealed class FailingRemoteAction : RemoteActionBase
     {
         /// <summary>

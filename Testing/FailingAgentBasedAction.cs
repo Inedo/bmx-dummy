@@ -1,4 +1,5 @@
 ﻿using System;
+using Inedo.BuildMaster;
 using Inedo.BuildMaster.Extensibility.Actions;
 
 namespace Inedo.BuildMasterExtensions.Dummy.Testing
@@ -8,8 +9,8 @@ namespace Inedo.BuildMasterExtensions.Dummy.Testing
     /// </summary>
     [ActionProperties(
         "Failing Agent-based Action",
-        "An agent-based action which throws an unhandled exception.",
-        "Dummy")]
+        "An agent-based action which throws an unhandled exception.")]
+    [Tag("dummy")]
     public sealed class FailingAgentBasedAction : AgentBasedActionBase
     {
         /// <summary>

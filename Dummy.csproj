@@ -62,11 +62,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BuildMaster.Web.Controls">
-      <HintPath>packages\Inedo.BuildMaster.SDK.4.0\lib\net40\BuildMaster.Web.Controls.dll</HintPath>
+      <HintPath>packages\Inedo.BuildMaster.SDK.4.5\lib\net40\BuildMaster.Web.Controls.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="BuildMasterCore">
-      <HintPath>packages\Inedo.BuildMaster.SDK.4.0\lib\net40\BuildMasterCore.dll</HintPath>
+      <HintPath>packages\Inedo.BuildMaster.SDK.4.5\lib\net40\BuildMasterCore.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
@@ -74,7 +74,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="InedoLib">
-      <HintPath>packages\Inedo.BuildMaster.SDK.4.0\lib\net40\InedoLib.dll</HintPath>
+      <HintPath>packages\Inedo.BuildMaster.SDK.4.5\lib\net40\InedoLib.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -83,21 +83,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DummyActionEditor.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="DummyAgent.cs" />
     <Compile Include="DummyExtensionConfigurer.cs" />
     <Compile Include="DummyAction.cs" />
     <Compile Include="Database\DummyDatabaseChangeScript.cs" />
     <Compile Include="Database\DummyDatabaseProvider.cs" />
+    <Compile Include="DummyTestingActionEditor.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="IssueTracking\DummyIssue.cs" />
     <Compile Include="IssueTracking\DummyIssueTrackingProvider.cs" />
-    <Compile Include="DummyNotifier.cs" />
     <Compile Include="DummyPredicate.cs" />
     <Compile Include="DummyRecipe\DummyUberRecipe.cs" />
     <Compile Include="PromotionRequirements\DummyPromotionRequirement.cs" />
-    <Compile Include="PromotionRequirements\DummyPromotionRequirementState.cs" />
     <Compile Include="SourceControl\DummyRepository.cs" />
     <Compile Include="SourceControl\DummySourceControlProvider.cs" />
-    <Compile Include="PromotionRequirements\DummyStateManagingPromotionRequirement.cs" />
     <Compile Include="DummyTestingAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Testing\ExceptionType.cs" />
