@@ -61,20 +61,23 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BuildMaster.Web.Controls">
-      <HintPath>packages\Inedo.BuildMaster.SDK.4.5\lib\net40\BuildMaster.Web.Controls.dll</HintPath>
+    <Reference Include="BuildMaster.Web.Controls, Version=4.9.4.9, Culture=neutral, PublicKeyToken=112cfb71329714a6, processorArchitecture=MSIL">
+      <HintPath>packages\Inedo.BuildMaster.SDK.4.9\lib\net40\BuildMaster.Web.Controls.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
-    <Reference Include="BuildMasterCore">
-      <HintPath>packages\Inedo.BuildMaster.SDK.4.5\lib\net40\BuildMasterCore.dll</HintPath>
+    <Reference Include="BuildMasterCore, Version=4.9.4.9, Culture=neutral, PublicKeyToken=112cfb71329714a6, processorArchitecture=MSIL">
+      <HintPath>packages\Inedo.BuildMaster.SDK.4.9\lib\net40\BuildMasterCore.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="InedoLib">
-      <HintPath>packages\Inedo.BuildMaster.SDK.4.5\lib\net40\InedoLib.dll</HintPath>
+    <Reference Include="InedoLib, Version=270.1.0.0, Culture=neutral, PublicKeyToken=112cfb71329714a6, processorArchitecture=MSIL">
+      <HintPath>packages\Inedo.BuildMaster.SDK.4.9\lib\net40\InedoLib.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -86,10 +89,8 @@
     <Compile Include="DummyActionEditor.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="DummyAgent.cs" />
     <Compile Include="DummyExtensionConfigurer.cs" />
     <Compile Include="DummyAction.cs" />
-    <Compile Include="Database\DummyDatabaseChangeScript.cs" />
     <Compile Include="Database\DummyDatabaseProvider.cs" />
     <Compile Include="DummyTestingActionEditor.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -97,9 +98,7 @@
     <Compile Include="IssueTracking\DummyIssue.cs" />
     <Compile Include="IssueTracking\DummyIssueTrackingProvider.cs" />
     <Compile Include="DummyPredicate.cs" />
-    <Compile Include="DummyRecipe\DummyUberRecipe.cs" />
     <Compile Include="PromotionRequirements\DummyPromotionRequirement.cs" />
-    <Compile Include="SourceControl\DummyRepository.cs" />
     <Compile Include="SourceControl\DummySourceControlProvider.cs" />
     <Compile Include="DummyTestingAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -11,24 +11,10 @@ namespace Inedo.BuildMasterExtensions.Dummy
         "Fakes a database provider.")]
     public sealed class DummyDatabaseProvider : DatabaseProviderBase, IChangeScriptProvider, IRestoreProvider
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DummyDatabaseProvider"/> class.
-        /// </summary>
-        public DummyDatabaseProvider()
-        {
-        }
-
-        /// <summary>
-        /// Indicates whether the provider is initialized.
-        /// </summary>
         [Persistent]
         [Category("Dummy Options")]
         [DisplayName("Initialized")]
         public bool IsInitialized { get; set; }
-
-        /// <summary>
-        /// Indicates whether the provider should throw exceptions.
-        /// </summary>
         [Persistent]
         [Category("Dummy Options")]
         [DisplayName("Throw NotImplementedExceptions")]
@@ -40,25 +26,19 @@ namespace Inedo.BuildMasterExtensions.Dummy
                 throw new NotImplementedException("The Dummy Provider cannot be initialized.");
         }
 
-        public bool IsDatabaseInitialized()
-        {
-            return this.IsInitialized;
-        }
+        public bool IsDatabaseInitialized() => this.IsInitialized;
 
         public ChangeScript[] GetChangeHistory()
         {
             return new[]
             {
-                new DummyDatabaseChangeScript(1, 1, "Script #1", new DateTime(2008, 1, 1), true),
-                new DummyDatabaseChangeScript(1, 2, "Script #2", new DateTime(2008, 1, 1), false),
-                new DummyDatabaseChangeScript(2, 3, "Script #3", new DateTime(2008, 1, 2), false)
+                new ChangeScript(1, 1, "Script #1", new DateTime(2008, 1, 1), true),
+                new ChangeScript(1, 2, "Script #2", new DateTime(2008, 1, 1), false),
+                new ChangeScript(2, 3, "Script #3", new DateTime(2008, 1, 2), false)
             };
         }
 
-        public long GetSchemaVersion()
-        {
-            return 2;
-        }
+        public long GetSchemaVersion() => 2;
 
         public ExecutionResult ExecuteChangeScript(long numericReleaseNumber, int scriptId, string scriptName, string scriptText)
         {
@@ -95,10 +75,7 @@ namespace Inedo.BuildMasterExtensions.Dummy
                 throw new NotImplementedException();
         }
 
-        public override bool IsAvailable()
-        {
-            return true;
-        }
+        public override bool IsAvailable() => true;
 
         public override void ValidateConnection()
         {

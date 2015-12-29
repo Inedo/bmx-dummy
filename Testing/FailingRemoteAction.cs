@@ -8,86 +8,40 @@ using Inedo.BuildMaster.Extensibility.Actions;
 
 namespace Inedo.BuildMasterExtensions.Dummy.Testing
 {
-    /// <summary>
-    /// A remote action which throws an unhandled exception.
-    /// </summary>
     [ActionProperties(
         "Failing Remote Action",
         "A remote action which throws an unhandled exception.")]
     [Tag("dummy")]
     public sealed class FailingRemoteAction : RemoteActionBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FailingRemoteAction"/> class.
-        /// </summary>
-        public FailingRemoteAction()
-        {
-        }
-
-        /// <summary>
-        /// Specifies the type of exception to throw.
-        /// </summary>
         [Persistent]
         [DisplayName("Exception Type")]
         [Category("Exception Type")]
         [Description("Specify the type of exception to throw while executing a remote command.")]
         public ExceptionType ExceptionType { get; set; }
 
-        /// <summary>
-        /// Returns a <see cref="System.String" /> that represents this instance.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="System.String" /> that represents this instance.
-        /// </returns>
-        /// <remarks>
-        /// This should return a user-friendly string describing what the Action does
-        /// and the state of its important persistent properties.
-        /// </remarks>
-        public override string ToString()
+        public override ActionDescription GetActionDescription()
         {
+            var desc = string.Empty;
+
             switch (this.ExceptionType)
             {
                 case ExceptionType.Standard:
-                    return "Throw an InvalidOperationException.";
-
+                    desc = "Throw an InvalidOperationException.";
+                    break;
                 case ExceptionType.Unserializable:
-                    return "Throw an exception that is not serializable.";
-
+                    desc = "Throw an exception that is not serializable.";
+                    break;
                 case ExceptionType.PresentOnlyOnRemote:
-                    return "Throw an exception of a type that is available only on the remote server.";
-
-                default:
-                    return string.Empty;
+                    desc = "Throw an exception of a type that is available only on the remote server.";
+                    break;
             }
+
+            return new ActionDescription(new ShortActionDescription(desc));
         }
 
-        /// <summary>
-        /// Executes the action.
-        /// </summary>
-        /// <remarks>
-        /// This method is always called on the BuildMaster server.
-        /// </remarks>
-        protected override void Execute()
-        {
-            this.ExecuteRemoteCommand(null);
-        }
+        protected override void Execute() => this.ExecuteRemoteCommand(null);
 
-        /// <summary>
-        /// When implemented in a derived class, processes an arbitrary command
-        /// on the appropriate server.
-        /// </summary>
-        /// <param name="name">Name of command to process.</param>
-        /// <param name="args">Optional command arguments.</param>
-        /// <returns>
-        /// Result of the command.
-        /// </returns>
-        /// <exception cref="System.InvalidOperationException">This is a test exception.</exception>
-        /// <exception cref="Inedo.BuildMasterExtensions.Dummy.Testing.UnserializableException"></exception>
-        /// <remarks>
-        /// This method is always invoked on the remote server by the system and should
-        /// never be called directly. To begin remote execution from the <see cref="M:Inedo.BuildMaster.Extensibility.Actions.ActionBase.Execute" />
-        /// method, call <see cref="M:Inedo.BuildMaster.Extensibility.Actions.RemoteActionBase.ExecuteRemoteCommand(System.String,System.String[])" />.
-        /// </remarks>
         protected override string ProcessRemoteCommand(string name, string[] args)
         {
             switch (this.ExceptionType)
