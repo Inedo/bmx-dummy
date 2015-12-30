@@ -14,9 +14,11 @@ namespace Inedo.BuildMasterExtensions.Dummy
             var lastChar = releaseNumber.Substring(releaseNumber.Length - 1, 1);
             int lastCharInt = int.TryParse(lastChar, out lastCharInt) ? lastCharInt : -1;
             this.IsClosed = lastCharInt >= 0 && (lastCharInt % 2) == 0;
+            this.Type = lastCharInt >= 0 && (lastCharInt % 3) == 0 ? "Bug" : "Feature";
         }
 
         public string Id => "1";
+        public string Type { get; }
         public string Title => "Dummy Issue";
         public string Status => this.IsClosed ? "Resolved" : "Unresolved";
         public string Url => null;
