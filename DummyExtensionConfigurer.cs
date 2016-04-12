@@ -1,5 +1,5 @@
-﻿using Inedo.BuildMaster;
-using Inedo.BuildMaster.Extensibility.Configurers.Extension;
+﻿using Inedo.BuildMaster.Extensibility.Configurers.Extension;
+using Inedo.Serialization;
 
 [assembly: ExtensionConfigurer(typeof(Inedo.BuildMasterExtensions.Dummy.DummyExtensionConfigurer))]
 
@@ -11,10 +11,5 @@ namespace Inedo.BuildMasterExtensions.Dummy
         public int MyProperty { get; set; }
         [Persistent]
         public string MyProperty2 { get; set; }
-
-        public override string ToString()
-        {
-            return string.Empty;
-        }
     }
 }

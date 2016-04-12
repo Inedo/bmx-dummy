@@ -1,15 +1,14 @@
 using System;
 using System.ComponentModel;
-using Inedo.BuildMaster;
 using Inedo.BuildMaster.Extensibility.Actions;
 using Inedo.BuildMaster.Extensibility.Predicates;
+using Inedo.Serialization;
 
 namespace Inedo.BuildMasterExtensions.Dummy
 {
-    [PredicateProperties(
-        "Dummy Predicate",
-        "A dummy predicate that will always return the specified boolean value.")]
     [Serializable]
+    [DisplayName("Dummy Predicate")]
+    [Description("A dummy predicate that will always return the specified boolean value.")]
     public sealed class DummyPredicate : PredicateBase
     {
         [Persistent]
@@ -18,14 +17,7 @@ namespace Inedo.BuildMasterExtensions.Dummy
         [Description("Check the box to have this predicate always evaluate to true.")]
         public bool EvaluateValue { get; set; }
 
-        public override bool Evaluate(IActionExecutionContext context)
-        {
-            return this.EvaluateValue;
-        }
-
-        public override string ToString()
-        {
-            return "Dummy predicate that is always " + this.EvaluateValue.ToString().ToLower();
-        }
+        public override bool Evaluate(IActionExecutionContext context) => this.EvaluateValue;
+        public override string ToString() => "Dummy predicate that is always " + this.EvaluateValue.ToString().ToLowerInvariant();
     }
 }

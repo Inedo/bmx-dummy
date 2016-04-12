@@ -47,12 +47,12 @@ namespace Inedo.BuildMasterExtensions.Dummy
                 new SlimFormField("Test group:", this.txtTestGroup),
                 new SlimFormField("Tests to run:", this.txtTestsToRun)
                 {
-                    HelpText = HelpText.FromHtml(
+                    HelpText = new LiteralHtml(
                         "Each test is represented as a pipe-delimited string with: " +
                         "<br /> 0: P or F (Pass or Fail)" +
                         "<br /> 1: Test Name (optional)" +
-                        "<br /> 2: Test Result (optional)"
-                    )
+                        "<br /> 2: Test Result (optional)",
+                        false)
                 }
             );
         }

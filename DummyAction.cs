@@ -1,29 +1,30 @@
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using Inedo.BuildMaster;
+using Inedo.BuildMaster.Documentation;
 using Inedo.BuildMaster.Extensibility.Actions;
 using Inedo.BuildMaster.Web;
+using Inedo.Serialization;
 
 namespace Inedo.BuildMasterExtensions.Dummy
 {
-    [ActionProperties(
-        "Dummy Action",
-        "A dummy action that does absolutely nothing except look like another action and log the specified text.")]
+    [DisplayName("Dummy Action")]
+    [Description("A dummy action that does absolutely nothing except look like another action and log the specified text.")]
     [Tag("dummy")]
     [CustomEditor(typeof(DummyActionEditor))]
     public sealed class DummyAction : ActionBase
     {
         [Persistent]
         public string ActionDescription { get; set; }
-
         [Persistent]
         public string[] TextToLog { get; set; }
 
-        public override ActionDescription GetActionDescription()
+        public override ExtendedRichDescription GetActionDescription()
         {
-            return new ActionDescription(
-                new ShortActionDescription(this.ActionDescription)
+            return new ExtendedRichDescription(
+                new RichDescription(this.ActionDescription)
             );
         }
 

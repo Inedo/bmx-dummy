@@ -1,17 +1,17 @@
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using Inedo.BuildMaster;
-using Inedo.BuildMaster.Extensibility.Actions;
+using Inedo.BuildMaster.Documentation;
 using Inedo.BuildMaster.Extensibility.Actions.Testing;
 using Inedo.BuildMaster.Web;
+using Inedo.Serialization;
 
 namespace Inedo.BuildMasterExtensions.Dummy
 {
-    [ActionProperties(
-        "Dummy Testing",
-        "Runs a series of unit tests.",
-        DefaultToLocalServer = true)]
+    [DisplayName("Dummy Testing")]
+    [Description("Runs a series of unit tests.")]
     [Tag("dummy")]
     [CustomEditor(typeof(DummyTestingActionEditor))]
     public sealed class DummyTestingAction : UnitTestActionBase
@@ -19,10 +19,10 @@ namespace Inedo.BuildMasterExtensions.Dummy
         [Persistent]
         public string[] TestsToRun { get; set; }
 
-        public override ActionDescription GetActionDescription()
+        public override ExtendedRichDescription GetActionDescription()
         {
-            return new ActionDescription(
-                new ShortActionDescription(
+            return new ExtendedRichDescription(
+                new RichDescription(
                     "Run ",
                     new Hilite(this.GroupName),
                     " Tests"

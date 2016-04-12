@@ -1,10 +1,11 @@
-﻿using Inedo.BuildMaster.Extensibility.Providers;
+﻿using System.ComponentModel;
 using Inedo.BuildMaster.Extensibility.Providers.SourceControl;
 using Inedo.BuildMaster.Files;
 
 namespace Inedo.BuildMasterExtensions.Dummy
 {
-    [ProviderProperties("Dummy SCM Provider", "A fake provider that does absolutely nothing.")]
+    [DisplayName("Dummy SCM Provider")]
+    [Description("A fake provider that does absolutely nothing.")]
     public sealed class DummySourceControlProvider : SourceControlProviderBase
     {
         public override char DirectorySeparator => '/';

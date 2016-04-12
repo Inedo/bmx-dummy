@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel;
-using Inedo.BuildMaster;
+using System.Threading.Tasks;
+using Inedo.BuildMaster.Documentation;
 using Inedo.BuildMaster.Extensibility.PromotionRequirements;
+using Inedo.Serialization;
 
 namespace Inedo.BuildMasterExtensions.Dummy
 {
-    [PromotionRequirementsProperties(
-        "Dummy Promotion Requirement", 
-        "A promotion requirement that, depending on configuration, is always met or not met.")]
+    [DisplayName("Dummy Promotion Requirement")]
+    [Description("A promotion requirement that, depending on configuration, is always met or not met.")]
     public sealed class DummyPromotionRequirement : PromotionRequirementBase
     {
         [Persistent]
@@ -19,14 +20,24 @@ namespace Inedo.BuildMasterExtensions.Dummy
         [DisplayName("Is Met")]
         public bool Met { get; set; }
 
-        public override bool IsRequired(PromotionContext context) => this.Required;
-        public override bool IsMet(PromotionContext context) => this.Met;
-        public override string ToString()
+        public override Task<PromotionRequirementStatus> GetStatusAsync(PromotionContext context) => Task.FromResult(this.GetStatus());
+        public override RichDescription GetDescription()
         {
-            return
-                (this.Required ? "" : "Not ") + "Required" +
-                " and " +
-                (this.Met ? "" : "Not ") + "Met";
+            return new RichDescription(
+                "Always ",
+                new Hilite(!this.Required ? "not applicable" : this.Met ? "met" : "not met")
+            );
+        }
+
+        private PromotionRequirementStatus GetStatus()
+        {
+            if (!this.Required)
+                return new PromotionRequirementStatus(PromotionRequirementState.NotApplicable, new RichDescription("Not required"));
+
+            if (this.Met)
+                return new PromotionRequirementStatus(PromotionRequirementState.Met, new RichDescription("Met"));
+            else
+                return new PromotionRequirementStatus(PromotionRequirementState.NotMet, new RichDescription("Not met"));
         }
     }
 }

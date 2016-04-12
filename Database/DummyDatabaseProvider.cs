@@ -1,15 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-using Inedo.BuildMaster;
-using Inedo.BuildMaster.Extensibility.Providers;
-using Inedo.BuildMaster.Extensibility.Providers.Database;
+using System.Threading;
+using System.Threading.Tasks;
+using Inedo.BuildMaster.Extensibility.DatabaseConnections;
+using Inedo.Serialization;
 
 namespace Inedo.BuildMasterExtensions.Dummy
 {
-    [ProviderProperties(
-        "Dummy Database",
-        "Fakes a database provider.")]
-    public sealed class DummyDatabaseProvider : DatabaseProviderBase, IChangeScriptProvider, IRestoreProvider
+    [DisplayName("Dummy Database")]
+    [Description("Fakes a database provider.")]
+    public sealed class DummyDatabaseProvider : DatabaseConnection, IChangeScriptExecuter, IBackupRestore
     {
         [Persistent]
         [Category("Dummy Options")]
@@ -17,76 +18,59 @@ namespace Inedo.BuildMasterExtensions.Dummy
         public bool IsInitialized { get; set; }
         [Persistent]
         [Category("Dummy Options")]
-        [DisplayName("Throw NotImplementedExceptions")]
+        [DisplayName("When true, throw a NotImplementedException whenever this connection is used.")]
         public bool ThrowNotImplementedExceptions { get; set; }
 
-        public void InitializeDatabase()
-        {
-            if (this.ThrowNotImplementedExceptions)
-                throw new NotImplementedException("The Dummy Provider cannot be initialized.");
-        }
+        public int MaxChangeScriptVersion => 1;
 
-        public bool IsDatabaseInitialized() => this.IsInitialized;
-
-        public ChangeScript[] GetChangeHistory()
-        {
-            return new[]
-            {
-                new ChangeScript(1, 1, "Script #1", new DateTime(2008, 1, 1), true),
-                new ChangeScript(1, 2, "Script #2", new DateTime(2008, 1, 1), false),
-                new ChangeScript(2, 3, "Script #3", new DateTime(2008, 1, 2), false)
-            };
-        }
-
-        public long GetSchemaVersion() => 2;
-
-        public ExecutionResult ExecuteChangeScript(long numericReleaseNumber, int scriptId, string scriptName, string scriptText)
-        {
-            if (numericReleaseNumber < 2)
-                return new ExecutionResult(ExecutionResult.Results.Skipped, "Older Script");
-            else if (this.ThrowNotImplementedExceptions)
-                throw new NotImplementedException();
-            else
-                return new ExecutionResult(ExecutionResult.Results.Success, "Faked Successfully!");
-
-        }
-
-        public void BackupDatabase(string databaseName, string destinationPath)
+        public override Task ExecuteQueryAsync(string query, CancellationToken cancellationToken)
         {
             if (this.ThrowNotImplementedExceptions)
                 throw new NotImplementedException();
-        }
 
-        public void RestoreDatabase(string databaseName, string sourcePath)
+            return Task.FromResult<object>(null);
+        }
+        public Task ExecuteChangeScriptAsync(ChangeScriptId scriptId, string scriptName, string scriptText, CancellationToken cancellationToken)
         {
             if (this.ThrowNotImplementedExceptions)
                 throw new NotImplementedException();
-        }
 
-        public override void ExecuteQueries(string[] queries)
+            return Task.FromResult<object>(null);
+        }
+        public Task<ChangeScriptState> GetStateAsync(CancellationToken cancellationToken)
         {
             if (this.ThrowNotImplementedExceptions)
                 throw new NotImplementedException();
-        }
 
-        public override void ExecuteQuery(string query)
+            return Task.FromResult(new ChangeScriptState(this.IsInitialized, this.MaxChangeScriptVersion));
+        }
+        public Task InitializeDatabaseAsync(CancellationToken cancellationToken)
         {
             if (this.ThrowNotImplementedExceptions)
                 throw new NotImplementedException();
+
+            return Task.FromResult<object>(null);
         }
-
-        public override bool IsAvailable() => true;
-
-        public override void ValidateConnection()
+        public Task UpgradeSchemaAsync(IReadOnlyDictionary<int, Guid> canoncialGuids, CancellationToken cancellationToken)
         {
+            if (this.ThrowNotImplementedExceptions)
+                throw new NotImplementedException();
+
+            return Task.FromResult<object>(null);
         }
-
-        public override string ToString()
+        public Task BackupDatabaseAsync(string databaseName, string destinationPath, CancellationToken cancellationToken)
         {
-            return string.Format(
-                "A database provider that {0} initialized and {1} throw exceptions",
-                this.IsInitialized ? "is" : "is not",
-                this.ThrowNotImplementedExceptions ? "will" : "will not");
+            if (this.ThrowNotImplementedExceptions)
+                throw new NotImplementedException();
+
+            return Task.FromResult<object>(null);
+        }
+        public Task RestoreDatabaseAsync(string databaseName, string sourcePath, CancellationToken cancellationToken)
+        {
+            if (this.ThrowNotImplementedExceptions)
+                throw new NotImplementedException();
+
+            return Task.FromResult<object>(null);
         }
     }
 }

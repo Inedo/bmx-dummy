@@ -1,23 +1,16 @@
 using System.Collections.Generic;
-using Inedo.BuildMaster.Extensibility;
+using System.ComponentModel;
+using Inedo.BuildMaster.Documentation;
 using Inedo.BuildMaster.Extensibility.IssueTrackerConnections;
-using Inedo.BuildMaster.Extensibility.Providers;
 
 namespace Inedo.BuildMasterExtensions.Dummy
 {
-    [ProviderProperties(
-        "Dummy Issue Tracker",
-        "Not a real provider, just returns a single issue.")]
+    [DisplayName("Dummy Issue Tracker")]
+    [Description("Not a real provider, just returns a single issue.")]
     public sealed class DummyIssueTrackingProvider : IssueTrackerConnectionBase
     {
-        public override IEnumerable<IIssueTrackerIssue> EnumerateIssues(IssueTrackerConnectionContext context)
-        {
-            return new[] { new DummyIssue(context.ReleaseNumber) };
-        }
-        public override ExtensionComponentDescription GetDescription()
-        {
-            return new ExtensionComponentDescription("Not a real provider, just returns a single issue.");
-        }
+        public override IEnumerable<IIssueTrackerIssue> EnumerateIssues(IssueTrackerConnectionContext context) => new[] { new DummyIssue(context.ReleaseNumber) };
+        public override RichDescription GetDescription() => new RichDescription("Not a real provider, just returns a single issue.");
         public override bool IsAvailable() => true;
         public override void ValidateConnection()
         {

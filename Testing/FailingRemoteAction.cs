@@ -4,13 +4,14 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.Serialization;
 using Inedo.BuildMaster;
+using Inedo.BuildMaster.Documentation;
 using Inedo.BuildMaster.Extensibility.Actions;
+using Inedo.Serialization;
 
 namespace Inedo.BuildMasterExtensions.Dummy.Testing
 {
-    [ActionProperties(
-        "Failing Remote Action",
-        "A remote action which throws an unhandled exception.")]
+    [DisplayName("Failing Remote Action")]
+    [Description("A remote action which throws an unhandled exception.")]
     [Tag("dummy")]
     public sealed class FailingRemoteAction : RemoteActionBase
     {
@@ -20,7 +21,7 @@ namespace Inedo.BuildMasterExtensions.Dummy.Testing
         [Description("Specify the type of exception to throw while executing a remote command.")]
         public ExceptionType ExceptionType { get; set; }
 
-        public override ActionDescription GetActionDescription()
+        public override ExtendedRichDescription GetActionDescription()
         {
             var desc = string.Empty;
 
@@ -37,7 +38,7 @@ namespace Inedo.BuildMasterExtensions.Dummy.Testing
                     break;
             }
 
-            return new ActionDescription(new ShortActionDescription(desc));
+            return new ExtendedRichDescription(new RichDescription(desc));
         }
 
         protected override void Execute() => this.ExecuteRemoteCommand(null);
