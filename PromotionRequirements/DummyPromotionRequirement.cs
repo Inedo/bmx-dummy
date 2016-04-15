@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Threading.Tasks;
-using Inedo.BuildMaster.Documentation;
 using Inedo.BuildMaster.Extensibility.PromotionRequirements;
+using Inedo.Documentation;
 using Inedo.Serialization;
 
 namespace Inedo.BuildMasterExtensions.Dummy

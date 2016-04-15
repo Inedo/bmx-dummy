@@ -1,8 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
-using Inedo.BuildMaster;
-using Inedo.BuildMaster.Documentation;
 using Inedo.BuildMaster.Extensibility.Actions;
+using Inedo.Documentation;
 
 namespace Inedo.BuildMasterExtensions.Dummy.Testing
 {

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
-using Inedo.BuildMaster.Documentation;
 using Inedo.BuildMaster.Extensibility.IssueTrackerConnections;
+using Inedo.Documentation;
 
 namespace Inedo.BuildMasterExtensions.Dummy
 {
